@@ -20,7 +20,8 @@ export class AppComponent implements OnInit {
   /** Respuest de la API */
   restItems: any;
   /** Url de la API */
-  restItemsUrl = 'https://restcountries.eu/rest/v2/all';
+  restItemsUrl = '127.0.0.1:8080/typhon/rest/warehouse/helper/searchPalet?idPalet=74';
+  //restItemsUrl = 'https://restcountries.eu/rest/v2/all';
   /** Semafro para mostrar la tabla de resultado de la combo de paises */
   selected: boolean = false;
   /** Pais seleccionado en la combo evento CLICK */
@@ -36,9 +37,9 @@ export class AppComponent implements OnInit {
    * tabla con el resultado
    */
   capturar() {
-    for (let count of this.restItems) {
-      if (count.name == this.opcionSeleccionado) {
-        this.pais = count;
+    for (let country of this.restItems) {
+      if (country.name == this.opcionSeleccionado) {
+        this.pais = country;
         this.selected = true;
         break;
       }
@@ -81,11 +82,11 @@ export class AppComponent implements OnInit {
 
   /**
    * Funcion que elimina de la tabla de añadidos
-   * @param coun 
+   * @param country 
    */
-  remove(coun: Country) {
+  remove(country: Country) {
     if (confirm('Estas seguro de que quieres eliminar este pais?')) {
-      this.countryArray = this.countryArray.filter(x => x != coun);
+      this.countryArray = this.countryArray.filter(x => x != country);
     }
   }
 }
