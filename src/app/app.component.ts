@@ -84,6 +84,8 @@ export class AppComponent implements OnInit {
    * @param coun 
    */
   remove(coun: Country) {
-    this.countryArray = this.countryArray.filter(x => x != coun);
+    if (confirm('Estas seguro de que quieres eliminar este pais?')) {
+      this.countryArray = this.countryArray.filter(x => x != coun);
+    }
   }
 }
