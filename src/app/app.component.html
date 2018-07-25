@@ -6,24 +6,25 @@
     {{country.name}}
   </option>
 </select>
-
-<!-- Prueba para ver la opción seleccionado 
-<p *ngIf="selected; else elseBlock">Has seleccionado la opción: {{ pais.name }}</p>
--->
-
-<div class="cointainer">
-  <div class="row">
-    <div class="col-md-8 mt-4">
-      <ul class="list-group">
-        <li *ngFor="let count of countryArray" class="list-group-item list-group-item-action">
-          <span class="badge badge-primary">{{count.name}} </span>{{count.capital}} -
-          <img src="{{count.flag}}" width="70px" height="30px" />
-        </li>
-      </ul>
-    </div>
-  </div>
+<div class="row mt-4"></div>
+<div class="list-group">
+  <a href="#" class="list-group-item list-group-item-action active">
+    Paises
+  </a>
+  <li *ngFor="let count of countryArray" class="list-group-item list-group-item-action">
+    <table class="table">
+      <tbody>
+        <tr>
+          <td>{{ count.name }}</td>
+          <td>{{ count.capital }}</td>
+          <td>
+            <img src="{{ count.flag }}" width="70px" height="30px" />
+        </tr>
+      </tbody>
+    </table>
+  </li>
 </div>
-
+<div class="row mt-4"></div>
 <table class="table table-striped" *ngIf="selected; else elseBlock">
   <thead>
     <tr>
@@ -36,8 +37,12 @@
     <tr>
       <td>{{ pais.name }}</td>
       <td>{{ pais.capital }}</td>
-      <td><img src="{{ pais.flag }}" width="70px" height="30px"/>
+      <td>
+        <img src="{{ pais.flag }}" width="70px" height="30px" />
     </tr>
   </tbody>
 </table>
-<button (click)="add()" class="btn btn-primary"> Submit </button>
+
+<div class="row mt-4"></div>
+
+<button (click)="add()" *ngIf="selected; else elseBlock" class="btn btn-primary"> Añadir País </button>

@@ -10,19 +10,18 @@ import { Country } from './Classes/country';
 })
 export class AppComponent implements OnInit {
   
-  countryArray: Country[]=[
-    {id: 1, name: "España", capital: "Madrid", flag: "https://restcountries.eu/data/esp.svg"},
-  ];
+  countryArray: Country[]=[];
 
   title = 'app';
   restItems: any;
-  restItemsUrl = 'https://restcountries.eu/rest/v2/region/europe';
+  //restItemsUrl = 'https://restcountries.eu/rest/v2/region/europe';
+  restItemsUrl = 'https://restcountries.eu/rest/v2/all';
   selected: boolean = false;
   constructor(private http: HttpClient) {}
   
   // Seleccionamos o iniciamos el valor '0' del <select>
   opcionSeleccionado: string='';
-  pais: Object[];
+  pais: Country;
   
   capturar() {
 
@@ -54,5 +53,8 @@ export class AppComponent implements OnInit {
   restItemsServiceGetRestItems() {
     return this.http.get<any[]>(this.restItemsUrl).pipe(map(data => data));
   }
-  add(){ }
+  add(){
+    this.pais.id = this.countryArray.length + 1;
+    this.countryArray.push(this.pais);
+  }
 }
