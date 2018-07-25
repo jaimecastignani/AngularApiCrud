@@ -17,8 +17,8 @@
         <tr>
           <td>{{ count.name }}</td>
           <td>{{ count.capital }}</td>
-          <td>
-            <img src="{{ count.flag }}" width="70px" height="30px" />
+          <td><img src="{{ count.flag }}" width="70px" height="30px" />
+          <td><button (click)="remove(count)" class="btn btn-primary"> Eliminar País </button></td>
         </tr>
       </tbody>
     </table>
@@ -30,7 +30,8 @@
     <tr>
       <th>Pais</th>
       <th>Capital</th>
-      <th>flag</th>
+      <th>Bandera</th>
+      <th>Añadir</th>
     </tr>
   </thead>
   <tbody>
@@ -39,10 +40,7 @@
       <td>{{ pais.capital }}</td>
       <td>
         <img src="{{ pais.flag }}" width="70px" height="30px" />
+        <td><button (click)="add()" class="btn btn-primary"> Añadir País </button></td>
     </tr>
   </tbody>
 </table>
-
-<div class="row mt-4"></div>
-
-<button (click)="add()" *ngIf="selected; else elseBlock" class="btn btn-primary"> Añadir País </button>

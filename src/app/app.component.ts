@@ -10,21 +10,32 @@ import { Country } from './Classes/country';
 })
 export class AppComponent implements OnInit {
   
-  countryArray: Country[]=[];
+  /**
+   * Declaracion variables
+   */
 
   title = 'app';
+  /** lista de paises añadidos */
+  countryArray: Country[]=[];
+  /** Respuest de la API */
   restItems: any;
-  //restItemsUrl = 'https://restcountries.eu/rest/v2/region/europe';
+  /** Url de la API */
   restItemsUrl = 'https://restcountries.eu/rest/v2/all';
+  /** Semafro para mostrar la tabla de resultado de la combo de paises */
   selected: boolean = false;
-  constructor(private http: HttpClient) {}
-  
-  // Seleccionamos o iniciamos el valor '0' del <select>
+  /** Pais seleccionado en la combo evento CLICK */
   opcionSeleccionado: string='';
+  /** Objeto Pais */
   pais: Country;
   
+  constructor(private http: HttpClient) {}
+  
+  /**
+   * Cuando seleccionamos en la combo se captura el itme seleccionado y se 
+   * compara con la lista que nos ha devuelto la API y poder mostrar una 
+   * tabla con el resultado
+   */
   capturar() {
-
    for (let count of this.restItems) {
       if (count.name == this.opcionSeleccionado) {
         this.pais = count;
@@ -34,6 +45,9 @@ export class AppComponent implements OnInit {
     }
   }
   
+  /**
+   * funcion que se lanza al iniciar la pagina
+   */
   ngOnInit() {
     this.getRestItems();
   }
@@ -53,8 +67,20 @@ export class AppComponent implements OnInit {
   restItemsServiceGetRestItems() {
     return this.http.get<any[]>(this.restItemsUrl).pipe(map(data => data));
   }
+
+  /**
+   * Funcion para añadir en la tabla de añadidos
+   */
   add(){
-    this.pais.id = this.countryArray.length + 1;
     this.countryArray.push(this.pais);
+  }
+
+  /**
+   * Funcion que elimina de la tabla de añadidos
+   * @param coun 
+   */
+  remove(coun: Country){
+    this.countryArray = this.countryArray.filter(x => x != coun);
+    //this.pais = new Country();
   }
 }
