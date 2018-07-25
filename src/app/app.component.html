@@ -1,0 +1,43 @@
+<h1>Países del mundo</h1>
+
+<select [(ngModel)]="opcionSeleccionado" (change)="capturar()">
+  <option value="0">Selecciona un país</option>
+  <option *ngFor="let country of restItems">
+    {{country.name}}
+  </option>
+</select>
+
+<!-- Prueba para ver la opción seleccionado 
+<p *ngIf="selected; else elseBlock">Has seleccionado la opción: {{ pais.name }}</p>
+-->
+
+<div class="cointainer">
+  <div class="row">
+    <div class="col-md-8 mt-4">
+      <ul class="list-group">
+        <li *ngFor="let count of countryArray" class="list-group-item list-group-item-action">
+          <span class="badge badge-primary">{{count.name}} </span>{{count.capital}} -
+          <img src="{{count.flag}}" width="70px" height="30px" />
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<table class="table table-striped" *ngIf="selected; else elseBlock">
+  <thead>
+    <tr>
+      <th>Pais</th>
+      <th>Capital</th>
+      <th>flag</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{ pais.name }}</td>
+      <td>{{ pais.capital }}</td>
+      <td><img src="{{ pais.flag }}" width="70px" height="30px"/>
+    </tr>
+  </tbody>
+</table>
+<button (click)="add()" class="btn btn-primary"> Submit </button>
