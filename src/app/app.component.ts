@@ -9,14 +9,14 @@ import { Country } from './Classes/country';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  
+
   /**
    * Declaracion variables
    */
 
   title = 'app';
   /** lista de paises añadidos */
-  countryArray: Country[]=[];
+  countryArray: Country[] = [];
   /** Respuest de la API */
   restItems: any;
   /** Url de la API */
@@ -24,19 +24,19 @@ export class AppComponent implements OnInit {
   /** Semafro para mostrar la tabla de resultado de la combo de paises */
   selected: boolean = false;
   /** Pais seleccionado en la combo evento CLICK */
-  opcionSeleccionado: string='';
+  opcionSeleccionado: string = '';
   /** Objeto Pais */
   pais: Country;
-  
-  constructor(private http: HttpClient) {}
-  
+
+  constructor(private http: HttpClient) { }
+
   /**
    * Cuando seleccionamos en la combo se captura el itme seleccionado y se 
    * compara con la lista que nos ha devuelto la API y poder mostrar una 
    * tabla con el resultado
    */
   capturar() {
-   for (let count of this.restItems) {
+    for (let count of this.restItems) {
       if (count.name == this.opcionSeleccionado) {
         this.pais = count;
         this.selected = true;
@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
       }
     }
   }
-  
+
   /**
    * funcion que se lanza al iniciar la pagina
    */
@@ -52,7 +52,10 @@ export class AppComponent implements OnInit {
     this.getRestItems();
   }
 
-  // Read all REST Items
+  /**
+   * Funcion que monta el Json resultante de la llamada de la API 
+   * en el objeto con el que vamos a trabajar
+   */
   getRestItems(): void {
     this.restItemsServiceGetRestItems()
       .subscribe(
@@ -62,8 +65,9 @@ export class AppComponent implements OnInit {
         }
       )
   }
-
-  // Rest Items Service: Read all REST Items
+  /**
+   * Funcion que llamada a la API
+   */
   restItemsServiceGetRestItems() {
     return this.http.get<any[]>(this.restItemsUrl).pipe(map(data => data));
   }
@@ -71,7 +75,7 @@ export class AppComponent implements OnInit {
   /**
    * Funcion para añadir en la tabla de añadidos
    */
-  add(){
+  add() {
     this.countryArray.push(this.pais);
   }
 
@@ -79,8 +83,7 @@ export class AppComponent implements OnInit {
    * Funcion que elimina de la tabla de añadidos
    * @param coun 
    */
-  remove(coun: Country){
+  remove(coun: Country) {
     this.countryArray = this.countryArray.filter(x => x != coun);
-    //this.pais = new Country();
   }
 }
