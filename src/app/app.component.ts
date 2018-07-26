@@ -26,13 +26,15 @@ export class AppComponent implements OnInit {
   existPalet: boolean = false;
   /** Objeto ClientPalet */
   palet: ClientPalet;
-
-  idPalet: string = "";
+  palets: ClientPalet[];
+  sendIdPalet: number;
+  idReception: number;
 
   constructor(private http: HttpClient) { }
 
   getPalet() {
-    this.http.get<any>(this.restItemsUrl + 'searchPalet?idPalet=' + this.idPalet, {
+    this.restItems= [];
+    this.http.get<any>(this.restItemsUrl + 'searchPalet?idPalet=' + this.sendIdPalet, {
       headers: new HttpHeaders().set('Authorization',
         'ApiOPSAuthorization:QsZ6tYQS+d59/dZz9FqDyMYLuvaWeG4tVF4OhMGTAP8=')
     }).pipe(map(data => data))
@@ -47,6 +49,7 @@ export class AppComponent implements OnInit {
   }
 
   getListPendingReceptions() {
+    this.restItems= [];
     this.http.get<any[]>(this.restItemsUrl + 'listPendingReceptions', {
       headers: new HttpHeaders().set('Authorization',
         'ApiOPSAuthorization:QsZ6tYQS+d59/dZz9FqDyMYLuvaWeG4tVF4OhMGTAP8=')
@@ -55,6 +58,21 @@ export class AppComponent implements OnInit {
         restItems => {
           this.restItems = restItems;
           this.listPendingReception = this.restItems;
+          console.log(this.restItems);
+        }
+      )
+  }
+
+  getLoadReceptionPalets() {
+    this.restItems= [];
+    this.http.get<any>(this.restItemsUrl + 'loadReceptionPalets?idReception=' + this.idReception, {
+      headers: new HttpHeaders().set('Authorization',
+        'ApiOPSAuthorization:QsZ6tYQS+d59/dZz9FqDyMYLuvaWeG4tVF4OhMGTAP8=')
+    }).pipe(map(data => data))
+      .subscribe(
+        restItems => {
+          this.restItems = restItems;
+          this.palets = this.restItems;
           console.log(this.restItems);
         }
       )

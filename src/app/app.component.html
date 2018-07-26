@@ -1,7 +1,7 @@
 <h1>Typhon</h1>
 
 <div class="form-group">
-  <input type="text" [(ngModel)]="idPalet" placeholder="Id Palet" class="form-control">
+  <input type="text" [(ngModel)]="sendIdPalet" placeholder="Id Palet" class="form-control">
   <div class="row mt-4"></div>
   <button (click)="getPalet()" class="btn btn-primary"> Buscar Palet</button>
 </div>
@@ -30,9 +30,31 @@
 <div class="row">
   <div class="col-md-8 mt-4">
     <ul class="list-group">
-      <li *ngFor="let reception of listPendingReception" class="list-group-item list-group-item-action">
+      <li class="list-group-item list-group-item-action" *ngFor="let reception of listPendingReception | paginate: { itemsPerPage:5, currentPage: p } ">
         {{reception.descripcionPromocion}}
       </li>
     </ul>
+    <div class="row mt-4"></div>
+    <pagination-controls (pageChange)="p =$event"></pagination-controls>
+  </div>
+</div>
+
+<div class="form-group">
+  <input type="text" [(ngModel)]="idReception" placeholder="Id Reception" class="form-control">
+  <div class="row mt-4"></div>
+  <button (click)="getLoadReceptionPalets()" class="btn btn-primary"> Load Reception Palets</button>
+</div>
+
+<div class="row mt-4"></div>
+
+<div class="row">
+  <div class="col-md-8 mt-4">
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-action" *ngFor="let pale of palets | paginate: { itemsPerPage:5, currentPage: p } ">
+        {{pale.idPalet}}
+      </li>
+    </ul>
+    <div class="row mt-4"></div>
+    <pagination-controls (pageChange)="p =$event"></pagination-controls>
   </div>
 </div>
