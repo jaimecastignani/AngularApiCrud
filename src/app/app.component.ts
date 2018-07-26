@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { ClientReception } from './model/client-reception';
 import { ClientPalet } from './model/client-palet';
+import { Menu } from './model/menu';
 
 @Component({
   selector: 'app-root',
@@ -29,11 +30,30 @@ export class AppComponent implements OnInit {
   palets: ClientPalet[];
   sendIdPalet: number;
   idReception: number;
+  isPalet: boolean = false;
+  isListPendingReceptions: boolean = false;
+  isLoadReceptionPalets: boolean = false;
+  option: number;
+
+  menuArry: Menu[] = [
+    { id: 1, title: "Buscar Palet" },
+    { id: 2, title: "Lista recepciones pendientes" },
+    { id: 3, title: "Cargar recepciones palets" }
+  ];
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * funcion que se lanza al iniciar la pagina
+   */
+  ngOnInit() { }
+
+  optionMenu(op: number) {
+    this.option = op;
+  }
+
   getPalet() {
-    this.restItems= [];
+    this.restItems = [];
     this.http.get<any>(this.restItemsUrl + 'searchPalet?idPalet=' + this.sendIdPalet, {
       headers: new HttpHeaders().set('Authorization',
         'ApiOPSAuthorization:QsZ6tYQS+d59/dZz9FqDyMYLuvaWeG4tVF4OhMGTAP8=')
@@ -49,7 +69,7 @@ export class AppComponent implements OnInit {
   }
 
   getListPendingReceptions() {
-    this.restItems= [];
+    this.restItems = [];
     this.http.get<any[]>(this.restItemsUrl + 'listPendingReceptions', {
       headers: new HttpHeaders().set('Authorization',
         'ApiOPSAuthorization:QsZ6tYQS+d59/dZz9FqDyMYLuvaWeG4tVF4OhMGTAP8=')
@@ -64,7 +84,7 @@ export class AppComponent implements OnInit {
   }
 
   getLoadReceptionPalets() {
-    this.restItems= [];
+    this.restItems = [];
     this.http.get<any>(this.restItemsUrl + 'loadReceptionPalets?idReception=' + this.idReception, {
       headers: new HttpHeaders().set('Authorization',
         'ApiOPSAuthorization:QsZ6tYQS+d59/dZz9FqDyMYLuvaWeG4tVF4OhMGTAP8=')
@@ -76,11 +96,5 @@ export class AppComponent implements OnInit {
           console.log(this.restItems);
         }
       )
-  }
-
-  /**
-   * funcion que se lanza al iniciar la pagina
-   */
-  ngOnInit() {
   }
 }
