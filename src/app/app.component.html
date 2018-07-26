@@ -1,46 +1,38 @@
-<h1>Países del mundo</h1>
+<h1>Typhon</h1>
 
-<select [(ngModel)]="opcionSeleccionado" (change)="capturar()">
-  <option value="0">Selecciona un país</option>
-  <option *ngFor="let country of restItems">
-    {{country.name}}
-  </option>
-</select>
-<div class="row mt-4"></div>
-<div class="list-group">
-  <a href="#" class="list-group-item list-group-item-action active">
-    Paises
-  </a>
-  <li *ngFor="let count of countryArray" class="list-group-item list-group-item-action">
-    <table class="table">
-      <tbody>
-        <tr>
-          <td>{{ count.name }}</td>
-          <td>{{ count.capital }}</td>
-          <td><img src="{{ count.flag }}" width="70px" height="30px" />
-          <td><button (click)="remove(count)" class="btn btn-primary"> Eliminar País </button></td>
-        </tr>
-      </tbody>
-    </table>
-  </li>
+<div class="form-group">
+  <input type="text" [(ngModel)]="idPalet" placeholder="Id Palet" class="form-control">
+  <div class="row mt-4"></div>
+  <button (click)="getPalet()" class="btn btn-primary"> Buscar Palet</button>
 </div>
+
 <div class="row mt-4"></div>
-<table class="table table-striped" *ngIf="selected; else elseBlock">
+<table class="table table-striped" *ngIf="existPalet;">
   <thead>
     <tr>
-      <th>Pais</th>
-      <th>Capital</th>
-      <th>Bandera</th>
-      <th>Añadir</th>
+      <th>Id Palet</th>
+      <th>Numero Estante</th>
+      <th>Codigo Palet</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>{{ pais.name }}</td>
-      <td>{{ pais.capital }}</td>
-      <td>
-        <img src="{{ pais.flag }}" width="70px" height="30px" />
-        <td><button (click)="add()" class="btn btn-primary"> Añadir País </button></td>
+      <td>{{ palet.idPalet }}</td>
+      <td>{{ palet.numeroEstante }}</td>
+      <td>{{ palet.codigoPalet }}</td>
     </tr>
   </tbody>
 </table>
+
+<div class="form-group">
+  <button (click)="getListPendingReceptions()" class="btn btn-primary"> List Pending Receptions </button>
+</div>
+<div class="row">
+  <div class="col-md-8 mt-4">
+    <ul class="list-group">
+      <li *ngFor="let reception of listPendingReception" class="list-group-item list-group-item-action">
+        {{reception.descripcionPromocion}}
+      </li>
+    </ul>
+  </div>
+</div>
