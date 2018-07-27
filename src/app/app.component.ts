@@ -29,8 +29,9 @@ export class AppComponent implements OnInit {
   isPalet: boolean = false;
   isListPendingReceptions: boolean = false;
   isLoadReceptionPalets: boolean = false;
-  
   objetoArray: Object;
+  error: boolean = false;
+
   /** Opciones de menu */
   option: number;
   menuArry: Menu[] = [
@@ -45,9 +46,10 @@ export class AppComponent implements OnInit {
   /**
    * funcion que se lanza al iniciar la pagina
    */
-  ngOnInit() {}
+  ngOnInit() { }
 
   optionMenu(op: number) {
+    this.error = false;
     this.option = op;
     this.sendIdPalet = "";
     this.idReception = "";
@@ -57,21 +59,31 @@ export class AppComponent implements OnInit {
     this.palet = new ClientPalet;
   }
 
+  initVars() {
+    this.palet = new ClientPalet;
+    this.error = false;
+    this.listPendingReception = [];
+    this.palets = [];
+    this.objetoArray = [];
+  }
+
   /** Buscar palet */
   getPalet() {
+    this.initVars();
     this.http.get<any>(this.restItemsUrl + 'searchPalet?idPalet=' + this.sendIdPalet, {
       headers: new HttpHeaders().set('Authorization',
         'ApiOPSAuthorization:QsZ6tYQS+d59/dZz9FqDyMYLuvaWeG4tVF4OhMGTAP8=')
     }).pipe(map(data => data))
       .subscribe(
         restItems => {
-          this.palet = restItems;
+          this.palet = restItems;          
         }
       )
   }
 
   /** Lista de recepciones pendientes */
   getListPendingReceptions() {
+    this.initVars();
     this.http.get<any[]>(this.restItemsUrl + 'listPendingReceptions', {
       headers: new HttpHeaders().set('Authorization',
         'ApiOPSAuthorization:QsZ6tYQS+d59/dZz9FqDyMYLuvaWeG4tVF4OhMGTAP8=')
@@ -85,6 +97,7 @@ export class AppComponent implements OnInit {
 
   /** Cargar palet de recepciones */
   getLoadReceptionPalets() {
+    this.initVars();
     this.http.get<any>(this.restItemsUrl + 'loadReceptionPalets?idReception=' + this.idReception, {
       headers: new HttpHeaders().set('Authorization',
         'ApiOPSAuthorization:QsZ6tYQS+d59/dZz9FqDyMYLuvaWeG4tVF4OhMGTAP8=')
@@ -98,6 +111,7 @@ export class AppComponent implements OnInit {
 
   /** Lista de versiones por recepcionar */
   getListVersionsReception() {
+    this.initVars();
     this.http.get<any[]>(this.restItemsUrl + 'listVersionsReception?idReception=' + this.idReception, {
       headers: new HttpHeaders().set('Authorization',
         'ApiOPSAuthorization:QsZ6tYQS+d59/dZz9FqDyMYLuvaWeG4tVF4OhMGTAP8=')
