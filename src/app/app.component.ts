@@ -30,12 +30,14 @@ export class AppComponent implements OnInit {
   isListPendingReceptions: boolean = false;
   isLoadReceptionPalets: boolean = false;
   
+  objetoArray: Object;
   /** Opciones de menu */
   option: number;
   menuArry: Menu[] = [
     { id: 1, title: "Buscar Palet" },
     { id: 2, title: "Lista recepciones pendientes" },
-    { id: 3, title: "Cargar recepciones palets" }
+    { id: 3, title: "Cargar recepciones palets" },
+    { id: 4, title: "Cargar palet de recepciones" }
   ];
 
   constructor(private http: HttpClient) { }
@@ -50,6 +52,7 @@ export class AppComponent implements OnInit {
     this.sendIdPalet = "";
     this.idReception = "";
     this.palets = [];
+    this.objetoArray = [];
     this.listPendingReception = [];
     this.palet = new ClientPalet;
   }
@@ -89,6 +92,19 @@ export class AppComponent implements OnInit {
       .subscribe(
         restItems => {
           this.palets = restItems;
+        }
+      )
+  }
+
+  /** Lista de versiones por recepcionar */
+  getListVersionsReception() {
+    this.http.get<any[]>(this.restItemsUrl + 'listVersionsReception?idReception=' + this.idReception, {
+      headers: new HttpHeaders().set('Authorization',
+        'ApiOPSAuthorization:QsZ6tYQS+d59/dZz9FqDyMYLuvaWeG4tVF4OhMGTAP8=')
+    }).pipe(map(data => data))
+      .subscribe(
+        restItems => {
+          this.objetoArray = restItems;
         }
       )
   }

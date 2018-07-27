@@ -1,5 +1,6 @@
 <h1>Typhon</h1>
 
+<!-- Opciones de Menu -->
 <div class="row">
   <div class="col-md-8 mt-4">
     <ul class="list-group">
@@ -10,10 +11,11 @@
   </div>
 </div>
 
+<!-- Buscar palet -->
 <div class="form-group mt-4" *ngIf="option==1">
   <input type="text" [(ngModel)]="sendIdPalet" placeholder="Id Palet" class="form-control">
   <div class="row mt-4"></div>
-  <button (click)="getPalet()" class="btn btn-primary"> Buscar Palet</button>
+  <button (click)="getPalet()" class="btn btn-primary">Buscar Palet</button>
 
   <div class="row mt-4"></div>
   <table class="table table-striped">
@@ -34,8 +36,9 @@
   </table>
 </div>
 
+<!-- Lista de recepciones pendientes -->
 <div class="form-group mt-4" *ngIf="option==2">
-  <button (click)="getListPendingReceptions()" class="btn btn-primary"> List Pending Receptions </button>
+  <button (click)="getListPendingReceptions()" class="btn btn-primary">List Pending Receptions </button>
 
   <div class="row mt-4">
     <div class="col-md-8">
@@ -50,16 +53,36 @@
   </div>
 </div>
 
+<!-- Cargar palet de recepciones -->
 <div class="form-group mt-4" *ngIf="option==3">
   <input type="text" [(ngModel)]="idReception" placeholder="Id Reception" class="form-control">
   <div class="row mt-4"></div>
-  <button (click)="getLoadReceptionPalets()" class="btn btn-primary"> Load Reception Palets</button>
+  <button (click)="getLoadReceptionPalets()" class="btn btn-primary">Load Reception Palets</button>
 
   <div class="row">
     <div class="col-md-8 mt-4">
       <ul class="list-group">
         <li class="list-group-item list-group-item-action" *ngFor="let pale of palets | paginate: { itemsPerPage:5, currentPage: p } ">
-          {{pale.idPalet}}
+          {{pale.idPalet}} - {{pale.codigoPalet}} - {{pale.fechaRecepcionString}}
+        </li>
+      </ul>
+      <div class="row mt-4"></div>
+      <pagination-controls (pageChange)="p =$event"></pagination-controls>
+    </div>
+  </div>
+</div>
+
+<!-- Lista de versiones por recepcionar -->
+<div class="form-group mt-4" *ngIf="option==4">
+  <input type="text" [(ngModel)]="idReception" placeholder="Id Reception" class="form-control">
+  <div class="row mt-4"></div>
+  <button (click)="getListVersionsReception()" class="btn btn-primary">Lista de versiones por recepcionar</button>
+
+  <div class="row">
+    <div class="col-md-8 mt-4">
+      <ul class="list-group">
+        <li class="list-group-item list-group-item-action" *ngFor="let reception of objetoArray | paginate: { itemsPerPage:5, currentPage: p } ">
+          {{reception.idVersionProducto}} - {{reception.nombre}}
         </li>
       </ul>
       <div class="row mt-4"></div>
