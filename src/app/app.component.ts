@@ -54,6 +54,7 @@ export class AppComponent implements OnInit {
     this.palet = new ClientPalet;
   }
 
+  /** Buscar palet */
   getPalet() {
     this.http.get<any>(this.restItemsUrl + 'searchPalet?idPalet=' + this.sendIdPalet, {
       headers: new HttpHeaders().set('Authorization',
@@ -66,6 +67,7 @@ export class AppComponent implements OnInit {
       )
   }
 
+  /** Lista de recepciones pendientes */
   getListPendingReceptions() {
     this.http.get<any[]>(this.restItemsUrl + 'listPendingReceptions', {
       headers: new HttpHeaders().set('Authorization',
@@ -78,6 +80,7 @@ export class AppComponent implements OnInit {
       )
   }
 
+  /** Cargar palet de recepciones */
   getLoadReceptionPalets() {
     this.http.get<any>(this.restItemsUrl + 'loadReceptionPalets?idReception=' + this.idReception, {
       headers: new HttpHeaders().set('Authorization',
