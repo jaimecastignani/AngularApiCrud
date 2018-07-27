@@ -21,8 +21,6 @@ export class AppComponent implements OnInit {
   listPendingReception: ClientReception[] = [];
   /** Url de la API */
   restItemsUrl = 'http://127.0.0.1:8080/typhon/rest/warehouse/helper/';
-  /** Semafro para mostrar la tabla de resultado de la combo de paises */
-  existPalet: boolean = false;
   /** Objeto ClientPalet */
   palet: ClientPalet;
   palets: ClientPalet[];
@@ -31,8 +29,9 @@ export class AppComponent implements OnInit {
   isPalet: boolean = false;
   isListPendingReceptions: boolean = false;
   isLoadReceptionPalets: boolean = false;
+  
+  /** Opciones de menu */
   option: number;
-  p: number;
   menuArry: Menu[] = [
     { id: 1, title: "Buscar Palet" },
     { id: 2, title: "Lista recepciones pendientes" },
@@ -44,7 +43,7 @@ export class AppComponent implements OnInit {
   /**
    * funcion que se lanza al iniciar la pagina
    */
-  ngOnInit() { }
+  ngOnInit() {}
 
   optionMenu(op: number) {
     this.option = op;
@@ -63,7 +62,6 @@ export class AppComponent implements OnInit {
       .subscribe(
         restItems => {
           this.palet = restItems;
-          this.existPalet = true;
         }
       )
   }
