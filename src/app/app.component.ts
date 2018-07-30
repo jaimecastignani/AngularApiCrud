@@ -4,12 +4,15 @@ import { map } from 'rxjs/operators';
 import { ClientReception } from './model/client-reception';
 import { ClientPalet } from './model/client-palet';
 import { Menu } from './model/menu';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { VersionProduct } from './model/version-product';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent implements OnInit {
 
   /**
@@ -26,11 +29,15 @@ export class AppComponent implements OnInit {
   palets: ClientPalet[];
   sendIdPalet: string = "";
   idReception: string = "";
+  idContainer: string = "";
   isPalet: boolean = false;
   isListPendingReceptions: boolean = false;
   isLoadReceptionPalets: boolean = false;
   objetoArray: Object;
   error: boolean = false;
+  p: number =  0;
+  version: Object;
+  versionProduct: VersionProduct[];
 
   /** Opciones de menu */
   option: number;
@@ -38,10 +45,16 @@ export class AppComponent implements OnInit {
     { id: 1, title: "Buscar Palet" },
     { id: 2, title: "Lista recepciones pendientes" },
     { id: 3, title: "Cargar recepciones palets" },
-    { id: 4, title: "Cargar palet de recepciones" }
+    { id: 4, title: "Cargar palet de recepciones" },
+    { id: 5, title: "Lista versiones en container" }
   ];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private modalService: NgbModal) {}
+
+  openModal(version: any, modal){
+    this.version = version;
+    this.modalService.open(modal);
+  }
 
   /**
    * funcion que se lanza al iniciar la pagina
@@ -57,6 +70,7 @@ export class AppComponent implements OnInit {
     this.objetoArray = [];
     this.listPendingReception = [];
     this.palet = new ClientPalet;
+    this. p = 0;
   }
 
   initVars() {
@@ -119,6 +133,20 @@ export class AppComponent implements OnInit {
       .subscribe(
         restItems => {
           this.objetoArray = restItems;
+        }
+      )
+  }
+
+  /** Lista versiones en container */
+  getVersionsInContainer() {
+    this.initVars();
+    this.http.get<any[]>(this.restItemsUrl + 'versionsInContainer?idContainer=' + this.idContainer, {
+      headers: new HttpHeaders().set('Authorization',
+        'ApiOPSAuthorization:QsZ6tYQS+d59/dZz9FqDyMYLuvaWeG4tVF4OhMGTAP8=')
+    }).pipe(map(data => data))
+      .subscribe(
+        restItems => {
+          this.versionProduct = restItems;
         }
       )
   }

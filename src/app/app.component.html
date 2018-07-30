@@ -13,7 +13,7 @@
 
 <!-- Buscar palet -->
 <div class="form-group mt-4" *ngIf="option==1">
-  <input type="text" [(ngModel)]="sendIdPalet" placeholder="Id Palet" class="form-control" required>
+  <input type="text" style="width:200px;" [(ngModel)]="sendIdPalet" placeholder="Id Palet" class="form-control" required>
   <div class="row mt-4"></div>
   <button (click)="getPalet()" *ngIf="sendIdPalet>0;" class="btn btn-primary">Buscar Palet</button>
 
@@ -55,7 +55,7 @@
 
 <!-- Cargar palet de recepciones -->
 <div class="form-group mt-4" *ngIf="option==3">
-  <input type="text" [(ngModel)]="idReception" placeholder="Id Reception" class="form-control">
+  <input type="text" style="width:200px;" [(ngModel)]="idReception" placeholder="Id Reception" class="form-control">
   <div class="row mt-4"></div>
   <button (click)="getLoadReceptionPalets()" class="btn btn-primary">Load Reception Palets</button>
 
@@ -74,7 +74,7 @@
 
 <!-- Lista de versiones por recepcionar -->
 <div class="form-group mt-4" *ngIf="option==4">
-  <input type="text" [(ngModel)]="idReception" placeholder="Id Reception" class="form-control">
+  <input type="text" style="width:200px;" [(ngModel)]="idReception" placeholder="Id Reception" class="form-control">
   <div class="row mt-4"></div>
   <button (click)="getListVersionsReception()" *ngIf="idReception>0;" class="btn btn-primary">Lista de versiones por recepcionar</button>
 
@@ -90,6 +90,32 @@
     </div>
   </div>
 </div>
+
+<!-- Lista versiones en container -->
+<div class="form-group mt-4" *ngIf="option==5">
+  <input type="text" style="width:200px;" [(ngModel)]="idContainer" placeholder="Id Container" class="form-control">
+  <div class="row mt-4"></div>
+  <button (click)="getVersionsInContainer()" *ngIf="idContainer>0;" class="btn btn-primary">Lista versiones en container</button>
+
+  <div class="row">
+    <div class="col-md-8 mt-4">
+      <ul class="list-group">
+        <li class="list-group-item list-group-item-action" *ngFor="let version of versionProduct | paginate: { itemsPerPage:5, currentPage: p } ">
+          {{version.nombre}} -
+          <img (click)="openModal(version, fotoProductoModal)" src="{{ version.producto.urlImagenPathB }}"
+            width="150px" height="150px" />
+        </li>
+      </ul>
+      <div class="row mt-4"></div>
+      <pagination-controls (pageChange)="p =$event"></pagination-controls>
+    </div>
+  </div>
+</div>
+
+<ng-template #fotoProductoModal>
+  <h4 style="text-align:center;">{{version.nombre}}</h4>
+  <img src="{{ version.producto.urlImagenPathB }}" width="100%" height="100%" />
+</ng-template>
 
 <div class="alert alert-warning" role="alert" *ngIf="error;">
   No hay resultados a mostrar
