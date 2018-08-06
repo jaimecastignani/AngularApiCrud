@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map } from 'rxjs/operators';
 import { Menu } from './model/menu';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Alumno } from './model/alumno';
+import { map } from 'rxjs/operators';
+import { Observable } from '../../node_modules/rxjs';
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +14,6 @@ import { Alumno } from './model/alumno';
 })
 
 export class AppComponent implements OnInit {
-
   /**
    * Declaracion variables
    */
@@ -22,11 +23,11 @@ export class AppComponent implements OnInit {
   restItemsUrl = 'http://localhost:8080/ApiRest/escuela/';
   alumno: Alumno;
   alumnos: Alumno[];
-  objetoArray: Object[];
+  idAlumno: number;
   p: number = 0;
   /** Opciones de menu */
   option: number;
-
+  response: any;
   menuArry: Menu[] = [
     { id: 1, title: "Lista Alumnos" }
   ];
@@ -41,7 +42,9 @@ export class AppComponent implements OnInit {
   /**
    * funcion que se lanza al iniciar la pagina
    */
-  ngOnInit() { }
+  ngOnInit() {
+    this.getAlumnos();
+  }
 
   optionMenu(op: number) {
     this.option = op;
@@ -61,6 +64,42 @@ export class AppComponent implements OnInit {
       .subscribe(
         restItems => {
           this.alumnos = restItems;
+        }
+      )
+  }
+
+  /** Crear alumno */
+  create(alumno: Alumno) {
+    alumno.idAlumno = null;
+    this.http.put(this.restItemsUrl + 'create', alumno).pipe(map(data => data))
+      .subscribe(
+        restItems => {
+          this.response = restItems;
+        }
+      )
+  }
+
+  private handleError(error: any) {
+    let errMsg = (error.message) ? error.message :
+      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    console.error(errMsg);
+    return Observable.throw(errMsg);
+  }
+
+  update(alumno: Alumno) {
+    this.http.post<any>(this.restItemsUrl + 'update', alumno).pipe(map(data => data))
+      .subscribe(
+        restItems => {
+          this.alumnos = restItems;
+        }
+      )
+  }
+
+  delete(idAlumno: number) {
+    this.http.delete(this.restItemsUrl + 'delete?idAlumno=' + idAlumno).pipe(map(data => data))
+      .subscribe(
+        restItems => {
+          this.response = restItems;
         }
       )
   }

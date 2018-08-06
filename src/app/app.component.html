@@ -13,14 +13,14 @@
 
 
 <!-- Lista de Alumnos -->
-<div class="form-group mt-4" *ngIf="option==1">
+<div class="form-group mt-4">
   <button (click)="getAlumnos()" class="btn btn-primary">Lista Alumnos </button>
 
   <div class="row mt-4">
     <div class="col-md-8">
       <ul class="list-group">
         <li class="list-group-item list-group-item-action" *ngFor="let alumno of alumnos">
-          {{alumno.nombre}}
+          {{alumno.nombre}} <button (click)="create(alumno)" class="btn btn-primary"> Crear alumno </button> <button (click)="delete(alumno.idAlumno)" class="btn btn-primary"> Eliminar alumno </button>
         </li>
       </ul>
       <div class="row mt-4"></div>
