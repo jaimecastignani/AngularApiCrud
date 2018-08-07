@@ -5,7 +5,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Alumno } from './model/alumno';
 import { map } from 'rxjs/operators';
 import { Observable } from '../../node_modules/rxjs';
-import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-root',
@@ -77,6 +76,7 @@ export class AppComponent implements OnInit {
           this.response = restItems;
         }
       )
+    this.getAlumnos();
   }
 
   private handleError(error: any) {
@@ -93,6 +93,7 @@ export class AppComponent implements OnInit {
           this.alumnos = restItems;
         }
       )
+    this.getAlumnos();
   }
 
   delete(idAlumno: number) {
@@ -102,5 +103,6 @@ export class AppComponent implements OnInit {
           this.response = restItems;
         }
       )
+    this.getAlumnos();
   }
 }

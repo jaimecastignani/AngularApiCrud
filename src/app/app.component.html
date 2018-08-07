@@ -1,4 +1,4 @@
-<h1>Typhon</h1>
+<h1>Escuela</h1>
 
 <!-- Opciones de Menu -->
 <div class="row">
@@ -13,17 +13,35 @@
 
 
 <!-- Lista de Alumnos -->
-<div class="form-group mt-4">
-  <button (click)="getAlumnos()" class="btn btn-primary">Lista Alumnos </button>
+<div class="row mt-4"></div>
+<li class="list-group-item list-group-item-action">
+  <table class="table table-striped" id="tableAlumno">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Curso</th>
+        <th>Añadir</th>
+        <th>Eliminar</th>
+        <th>Editar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let alumno of alumnos | paginate: { itemsPerPage:3, currentPage: p } ">
+        <td>{{ alumno.nombre }}</td>
+        <td>{{ alumno.curso }}</td>
+        <td>
+          <button (click)="create(alumno)" class="btn btn-primary"> Crear alumno </button>
+        </td>
+        <td>
+          <button (click)="delete(alumno.idAlumno)" class="btn btn-primary"> Eliminar alumno </button>
+        </td>
+        <td>
+          <button class="btn btn-primary"> Editar alumno </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</li>
 
-  <div class="row mt-4">
-    <div class="col-md-8">
-      <ul class="list-group">
-        <li class="list-group-item list-group-item-action" *ngFor="let alumno of alumnos">
-          {{alumno.nombre}} <button (click)="create(alumno)" class="btn btn-primary"> Crear alumno </button> <button (click)="delete(alumno.idAlumno)" class="btn btn-primary"> Eliminar alumno </button>
-        </li>
-      </ul>
-      <div class="row mt-4"></div>
-    </div>
-  </div>
-</div>
+<div class="row mt-4"></div>
+<pagination-controls (pageChange)="p =$event"></pagination-controls>
